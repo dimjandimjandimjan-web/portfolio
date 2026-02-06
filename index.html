@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Художник | Визуализации и 3D-печать</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f0f14;
+      color: #f2f2f2;
+      line-height: 1.6;
+    }
+    header {
+      padding: 80px 20px;
+      text-align: center;
+      background: linear-gradient(rgba(15,15,20,0.7), rgba(15,15,20,0.7)), url('picture/header.png') left center/cover no-repeat;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    header p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #cfcfe6;
+    }
+    header a {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 30px;
+      background: #6c63ff;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .card {
+      background: #1b1b2b;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card img {
+      width: 90%;
+      height: 60%;
+      max-height: 180px;
+      object-fit: cover;
+      object-position: center;
+      margin: 0 auto 20px;
+      display: block;
+      border-radius: 8px;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .card h3 {
+      margin-bottom: 15px;
+      color: #8f8aff;
+    }
+    .portfolio {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .work {
+      background: #1b1b2b;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .work img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .work p {
+      padding: 15px;
+      font-size: 0.95rem;
+      color: #cfcfe6;
+      background: #1b1b2b;
+    }
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .about p {
+      color: #cfcfe6;
+    }
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      background: #0a0a10;
+      color: #8a8aa3;
+    }
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .about { grid-template-columns: 1fr; }
+    }
+  .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img, .lightbox video {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 48px;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px 20px;
+    }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    @media (max-width: 768px) {
+      .lightbox-nav { display: none; }
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 32px;
+      cursor: pointer;
+      color: #fff;
+    }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>3D Художник</h1>
+  <p>Создание фотореалистичных 3D-визуализаций, моделей для 3D-печати и игровых движков</p>
+  <a href="https://t.me/ANikolaevaMSK" target="_blank" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;padding:12px 28px;border-radius:30px;background:#2aabee;color:#fff;text-decoration:none;font-weight:bold;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 25 24" fill="currentColor">
+      <path d="M9.993 15.674l-.416 5.856c.596 0 .855-.256 1.167-.563l2.802-2.677 5.805 4.247c1.064.587 1.816.278 2.083-.987l3.776-17.748h.001c.313-1.463-.529-2.036-1.566-1.647L1.52 9.423c-1.434.559-1.412 1.357-.244 1.716l5.908 1.844L20.88 5.39c.642-.425 1.227-.19.745.235"/>
+    </svg>
+    Написать в Telegram
+  </a><br>
+  <a href="#portfolio">Смотреть работы</a>
+</header>
+
+<section>
+  <h2>Услуги</h2>
+  <div class="services">
+    <div class="card">
+      <img src="picture/service-visual-1.jpg" alt="3D визуализация">
+      <h3>3D-визуализация</h3>
+      <p>Архитектура, предметы, интерьеры и рекламные сцены с фотореалистичным освещением.</p>
+    </div>
+    <div class="card">
+      <img src="picture/service-print-1.jpg" alt="3D печать">
+      <h3>Модели для 3D-печати</h3>
+      <p>Подготовка watertight-моделей, оптимизация под FDM и SLA печать.</p>
+    </div>
+    <div class="card">
+      <img src="picture/service-sculpt-1.jpg" alt="Hard Surface">
+      <h3>Hard Surface & Sculpt</h3>
+      <p>Технические и художественные модели для игр, кино и производства.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <h2>Портфолио</h2>
+  <div class="portfolio">
+    <!-- images -->
+    <div class="work"><img src="picture/work1.jpg" alt="Работа 1"><p>Визуализация островка</p></div>
+    <div class="work"><img src="picture/work2.jpg" alt="Работа 2"><p>Визуализация напольного покрытия</p></div>
+    <div class="work"><img src="picture/work3.jpg" alt="Работа 3"><p>кованые перила лестницы</p></div>
+    <div class="work" data-video="picture/video4.mp4"><img src="picture/work4.jpg" alt="Работа 4"><p>Анимированое приглажение на детский праздник</p></div>
+    <div class="work" data-video="picture/video5.mp4"><img src="picture/work5.jpg" alt="Работа 5"><p>Анимированое приглажение на детский праздник</p></div>
+    <div class="work" data-video="picture/video6.mp4"><img src="picture/work6.jpg" alt="Работа 6"><p>Анимация для сайта производителя труб</p></div>
+    <div class="work"><img src="picture/work7.jpg" alt="Работа 7"><p>Визуализация островка</p></div>
+    <div class="work"><img src="picture/work8.jpg" alt="Работа 8"><p>Макет уличного светильника</p></div>
+    <div class="work"><img src="picture/work9.jpg" alt="Работа 9"><p>визуализация мраморного предмета интерьера</p></div>
+    <div class="work"><img src="picture/work10.jpg" alt="Работа 10"><p>Визуализация лестничного пролета</p></div>
+    <div class="work"><img src="picture/work11.jpg" alt="Работа 11"><p>Визуализация торгового центра с боулингом</p></div>
+    <div class="work"><img src="picture/work12.jpg" alt="Работа 12"><p>Концепт атракциона для производителя</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Обо мне</h2>
+  <div class="about">
+    <p>
+      Я 3D-художник с опытом работы в визуализации, прототипировании и подготовке моделей для производства.
+      Работаю в Blender, Fusion 360 и Substance Painter.
+    </p>
+    <p>
+      Помогаю превратить идею в готовую 3D-модель — от концепта до финального рендера или файла для печати.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 • 3D Художник • Связаться: nikolaeeeeva@gmail.com</p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightboxClose">×</span>
+  <span class="lightbox-nav lightbox-prev" id="prevBtn">‹</span>
+  <span class="lightbox-nav lightbox-next" id="nextBtn">›</span>
+</div>
+
+
+
+<script>
+  const works = Array.from(document.querySelectorAll('.work'));
+  const lightbox = document.getElementById('lightbox');
+  const closeBtn = document.getElementById('lightboxClose');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  let currentIndex = 0;
+
+  function showItem(index) {
+    currentIndex = (index + works.length) % works.length;
+    lightbox.querySelectorAll('img, video').forEach(e => e.remove());
+    const work = works[currentIndex];
+    const videoSrc = work.dataset.video;
+
+    if (videoSrc) {
+      const video = document.createElement('video');
+      video.src = videoSrc;
+      video.controls = true;
+      video.autoplay = true;
+      lightbox.appendChild(video);
+    } else {
+      const img = work.querySelector('img').cloneNode();
+      lightbox.appendChild(img);
+    }
+  }
+
+  works.forEach((work, index) => {
+    work.addEventListener('click', () => {
+      lightbox.classList.add('active');
+      showItem(index);
+    });
+  });
+
+  prevBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    showItem(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    showItem(currentIndex + 1);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    lightbox.querySelectorAll('img, video').forEach(e => e.remove());
+  });
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeBtn.click();
+  });
+
+  // swipe for mobile
+  let startX = 0;
+  lightbox.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  lightbox.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    if (endX - startX > 50) showItem(currentIndex - 1);
+    if (startX - endX > 50) showItem(currentIndex + 1);
+  });
+</script>
+</body>
+</html>
